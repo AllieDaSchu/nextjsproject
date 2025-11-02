@@ -1,64 +1,71 @@
 import Image from "next/image";
+import Navbar from "@/components/Navbar.js"
+import styles from "./page.module.css"
+import Link from "next/link"
+import Card from "@/components/Card.js"
+import Columns from "@/components/Columns.jsx"
 
-export default function Home() {
+async function getTitles() {
+  const response = await fetch(`https://web.ics.purdue.edu/%7Ezong6/profile-app/get-titles.php`, {
+    next: {revalidate: 60}
+  })
+  const data = await response.json()
+  return data ? data.titles : []
+}
+
+async function getProfiles(title, search) {
+  const response = await fetch(`https://web.ics.purdue.edu/~zong6/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&limit=1000`, {
+    next: {revalidate: 60}
+  })
+  const data = await response.json();
+  return data ? data.profiles : []
+}
+
+export default async function Home({searchParams}) {
+  const {title = "", search = ""} = await searchParams;
+  const [titles, profiles] = await Promise.all([
+    getTitles(),
+    getProfiles(title, search)
+
+  ])
+  console.log(profiles)
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className={styles.page} >
+      <main className={styles.main} >
+        <h1 className="header">Profiles</h1>
+        <form method="GET" action="/">
+            <div className="select-filter">
+                <div className="dropdownColumn">
+                    <label htmlFor="select">Select a Title: </label>
+                    <select id="select" className="drop-down" defaultValue={title} name="title">
+                        <option value="">All</option>
+                        {
+                            titles.map(title => <option key={title} defaultValue={title}>{title}</option>)
+                        }
+                    </select>
+                </div>
+                <div className="searchColumn">
+                    <label htmlFor="search">Search by Name: </label>
+                    <input id="search" className="search-bar" defaultValue={search} type="text" placeholder="Enter Name" name="search" />
+                    <button type="submit" className="filterBtn">Apply</button>
+                    <Link className="filterBtn" href="/">Clear</Link>
+                </div>
+            </div>
+        </form>
+        <Columns>
+          {profiles?profiles.map((profile) => (
+            <Link className="card-link" key={profile.id} href={`/profile/${profile.id}`}>                    
+              <Card
+                name={profile.name}
+                title={profile.title}
+                email={profile.email}
+                description={profile.bio}
+                img={profile.image_url}
+              />
+            </Link>
+          )):<div>Loading...</div>}
+        </Columns>
+        
       </main>
     </div>
   );
