@@ -1,16 +1,20 @@
-let users = [
-    {id:1, name:"Ava Lee", major:"CS", year:2, gpa:3.6},
-    {id:2, name:"Ben Park", major:"CGT", year:3, gpa:3.2}
-]
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 /* GET Method that filters each part of the Users */
 export async function GET(request) {
     const searchParams = request.nextUrl.searchParams
-    let tempUsers = [...users];
-    const name = searchParams.get('name');
-    const major = searchParams.get('major');
-    const year = searchParams.get('year');
-    const gpa = searchParams.get('gpa');
+    
+    const name = searchParams.get('name') || "";
+    const major = searchParams.get('major') || "";
+    const year = searchParams.get('year') || "";
+    const gpa = searchParams.get('gpa') || "";
+
+    const students = await prisma.students.findMany();
+    let tempUsers = students;
     if (major) {
         tempUsers = tempUsers.filter((user) => user.major.toLowerCase() === major.toLowerCase())
     }
