@@ -27,6 +27,8 @@ export default async function Home({searchParams}) {
     getTitles(),
     getProfiles(title, search)
 
+
+    
   ])
   console.log(profiles)
   return (
