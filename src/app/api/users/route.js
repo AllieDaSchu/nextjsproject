@@ -1,13 +1,12 @@
-/* import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic' */
-
-let users = [
-    { name: "Ava Lee", major: "CS", year: 2, gpa: 3.6 },
-    { name: "Ben Park", major: "CGT", year: 3, gpa: 3.2 }
-];
+export const dynamic = 'force-dynamic'
+/* let users = [
+    {id:1, name:"Ava Lee", major:"CS", year:2, gpa:3.6},
+    {id:2, name:"Ben Park", major:"CGT", year:3, gpa:3.2}
+]; */
 
 /* GET Method that filters each part of the Users */
 export async function GET(request) {
@@ -67,14 +66,14 @@ export async function POST(request) {
             {status:400}
         );
     }
-    const yearInt = parseInt(body.year);
+    const yearInt = parseInt(year);
     if (isNaN(yearInt) || yearInt < 1 || yearInt > 4) {
         return Response.json(
             {error:'Year must be an integer between 1 and 4'},
             {status:400}
         );
     }
-    const gpaFloat = parseFloat(body.gpa);
+    const gpaFloat = parseFloat(gpa);
     if (isNaN(gpaFloat) || gpaFloat < 0 || gpaFloat > 4) {
         return Response.json(
             {error:'GPA must be a number between 0 and 4'},

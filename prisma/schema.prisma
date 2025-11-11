@@ -20,3 +20,12 @@ model Students {
   year Int
   gpa Float
 }
+
+model Profiles {
+  id Int @id @default(autoincrement())
+  name String
+  title Stringemail String @unique
+  bio Stringimage_url String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}

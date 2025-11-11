@@ -4,8 +4,8 @@ let users = [
 ]
 
 export async function GET(request, {params}) {
-    const id = params.id;
-    const user = users.find(u => u.id === id)
+    const {id} = await params;
+    const user = users.find(u => u.id === Number(id))
 
     if (!user) {
         return Response.json(
