@@ -26,7 +26,8 @@ model Profiles {
   name String
   title String
   email String @unique
-  bio Stringimage_url String
+  bio String
+  image_url String
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
