@@ -1,8 +1,13 @@
-import { PrismaClient } from '@prisma/client'
+/* import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic' */
+
+let users = [
+    { name: "Ava Lee", major: "CS", year: 2, gpa: 3.6 },
+    { name: "Ben Park", major: "CGT", year: 3, gpa: 3.2 }
+];
 
 /* GET Method that filters each part of the Users */
 export async function GET(request) {
