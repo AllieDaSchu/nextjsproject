@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
     {id:2, name:"Ben Park", major:"CGT", year:3, gpa:3.2}
 ]; */
 
+
 /* GET Method that filters each part of the Users */
 export async function GET(request) {
     const searchParams = request.nextUrl.searchParams
