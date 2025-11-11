@@ -1,4 +1,6 @@
-export default async function({params}) {
+import Image from 'next/image';
+
+export default async function generateProfile({params}) {
     const {id} = await params;
 
     const response = await fetch(`https://web.ics.purdue.edu/~zong6/profile-app/fetch-data-with-id.php?id=${id}`, {
