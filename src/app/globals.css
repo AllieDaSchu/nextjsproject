@@ -109,7 +109,7 @@ form {
     margin-top: 20px;
 }
 
-input[type=text], textarea {
+input[type=text], input[type=email], textarea {
   border: 1px #000 solid;
 }
 
