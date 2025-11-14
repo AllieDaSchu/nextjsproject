@@ -96,3 +96,31 @@ form {
   padding: 10px 50px;
   max-width: 1050px;
 }
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 750px;
+    margin: auto;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #F0F0F0;
+    margin-top: 20px;
+}
+
+input[type=text], textarea {
+  border: 1px #000 solid;
+}
+
+#submit {
+    margin-top: 15px;
+    background-color: #333;
+    color: #fff;
+}
+
+.section {
+    padding: 0px 75px;
+    max-width: 1200px;
+    margin: 0 auto;
+}

@@ -4,30 +4,27 @@ import styles from "./page.module.css"
 import Link from "next/link"
 import Card from "@/components/Card.js"
 import Columns from "@/components/Columns.jsx"
-
-async function getTitles() {
-  const response = await fetch(`https://web.ics.purdue.edu/%7Ezong6/profile-app/get-titles.php`, {
-    next: {revalidate: 60}
-  })
-  const data = await response.json()
-  return data ? data.titles : []
-}
-
-async function getProfiles(title, search) {
-  const response = await fetch(`https://web.ics.purdue.edu/~zong6/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&limit=1000`, {
-    next: {revalidate: 60}
-  })
-  const data = await response.json();
-  return data ? data.profiles : []
-}
+import {PrismaClient} from '@prisma/client';
+const prisma = new PrismaClient()
 
 export default async function Home({searchParams}) {
   const {title = "", search = ""} = await searchParams;
-  const [titles, profiles] = await Promise.all([
-    getTitles(),
-    getProfiles(title, search)
+  const profiles = await prisma.profiles.findMany({
+    where: {
+      title: title ? { equals: title} : undefined,
+      name: search ? { contains: search, mode: "insensitive" } : undefined,
+    },
+    orderBy: { id: "desc"},
+  });
 
-  ])
+  const allTitles = await prisma.profiles.findMany({
+    distinct: ['title'],
+    select: { title: true },
+    orderBy: {title: "asc"},
+  });
+
+  const titles = allTitles.map((t) => t.title);
+
   console.log(profiles)
   return (
     <div className={styles.page} >
@@ -59,7 +56,7 @@ export default async function Home({searchParams}) {
                 name={profile.name}
                 title={profile.title}
                 email={profile.email}
-                description={profile.bio}
+                bio={profile.bio}
                 img={profile.image_url}
               />
             </Link>
