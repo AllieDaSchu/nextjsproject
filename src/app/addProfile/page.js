@@ -6,7 +6,7 @@ import Wrapper from '@/components/Wrapper.jsx'
 function AddProfile () {
     return (
         <Wrapper id="addProfile">
-            <MyForm />
+            <MyForm profile={null} />
         </Wrapper>
     )
 }
