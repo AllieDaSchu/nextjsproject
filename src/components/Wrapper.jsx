@@ -8,4 +8,6 @@ const Wrapper = ({children, id}) => {
     )
 }
 
-export default Wrapper;
+export default Wrapper
+
+;
