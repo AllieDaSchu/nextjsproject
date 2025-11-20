@@ -180,3 +180,67 @@ input[type=text], input[type=email], textarea {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+.signFormContainer {
+  width: 70%;
+  margin: auto;
+  max-width: 500px;
+  border: 1px #333 solid;
+  padding: 1rem;
+}
+
+.formRow {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  gap: 8px;
+}
+
+.formRow label {
+  flex-shrink: 0;
+}
+
+.formRow input[id=email], .formRow input[id=password] {
+  flex-grow: 1;
+  padding: 2px 6px;
+  font-size: 1rem;
+  border: 1px #000 solid;
+}
+
+.toggle {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.authForm button {
+  border-radius: 10px;
+  background-color: rgb(98, 152, 203);
+  padding: 3px 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.authForm button:hover {
+  background-color: rgb(56, 91, 124);
+  color: #fff;
+  cursor: pointer;
+}
+
+.toggle button {
+  color: rgb(8, 52, 94);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.account-section {
+  display: flex;
+  gap: 15px;
+}
+
+.account-section .userEmail {
+  text-decoration: underline;
+}
+
+.account-section button {
+  cursor: pointer;
+}
