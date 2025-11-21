@@ -1,6 +1,4 @@
-export const runtime = "nodejs";
-
-export { auth as middleware } from "@/auth"
+export { auth as middleware } from "@/auth-edge"
 
 export const config = {
   matcher: ["/add-profile", "/profile/:path*/edit"],

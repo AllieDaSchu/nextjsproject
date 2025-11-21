@@ -2,10 +2,11 @@ import NextAuth from "next-auth";
 import bcrypt from "bcryptjs";
 import Credentials from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma"
+import GitHub from "next-auth/providers/google"
 
 export const {
     auth, handlers,
-} = NextAuth ({
+    } = NextAuth ({
     providers: [
         Credentials({
             name: "Credentials",
@@ -38,6 +39,7 @@ export const {
                 }
             },
         }),
+        GitHub,
     ],
     pages: {
         signIn: '/auth/signin',

@@ -17,6 +17,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (callbackUrl !== "/") {
+        console.log(callbackUrl)
       setStatusMessage("Please sign in to continue");
     }
   }, [callbackUrl]);
@@ -83,7 +84,7 @@ const AuthForm = () => {
     <div className="signFormContainer">
       <h1>{isLogin ? "Sign In" : "Register"}</h1>
       {statusMessage && <p className="statusMessage">{statusMessage}</p>}
-      <form onSubmit={handleSubmit} className="authForm">
+      {/* <form onSubmit={handleSubmit} className="authForm">
         <div className="formRow">
           <label htmlFor="email">Email: </label>
           <input
@@ -108,13 +109,16 @@ const AuthForm = () => {
         <button type="submit" disabled={isSubmitting || !data.email || !data.password}>
           {isSubmitting ? "Signing in..." : isLogin ? "Sign In" : "Register"}
         </button>
-      </form>
+      </form> */}
       <div className="toggle">
         <p>{isLogin ? "Don't have an account?" : "Already have an account?"}</p>
         <button type="button" onClick={handleToggle}>
           {isLogin ? "Register" : "Sign In"}
         </button>
       </div>
+      <button onClick={() => signIn("github", {callbackUrl})}>
+        Sign in with GitHub
+      </button>
     </div>
   );
 };
