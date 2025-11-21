@@ -244,3 +244,15 @@ input[type=text], input[type=email], textarea {
 .account-section button {
   cursor: pointer;
 }
+
+.service-logins {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-logins .service-btn {
+  padding: 5px;
+  background-color: #f6f6f6;
+  border-radius: 15px;
+  margin: 5px;
+}
